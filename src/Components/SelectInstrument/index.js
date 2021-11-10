@@ -76,7 +76,7 @@ const SelectInstrument = ({ setInstrumentNFT }) => {
       }
     };
   
-  }, [gameContract]);
+  }, [gameContract, setInstrumentNFT]);
   
 
   // UseEffect

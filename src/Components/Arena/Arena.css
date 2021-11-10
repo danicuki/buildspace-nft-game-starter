@@ -157,15 +157,15 @@
 }
 
 /* Effects */
-.boss-container .attacking {
+.boss-container .playing {
   animation: shake 1.2s cubic-bezier(0.36, 0.07, 0.19, 0.97) both infinite;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
 }
 
-.boss-container .hit {
-  animation: hit-bounce 1s ease;
+.boss-container .played {
+  animation: played-bounce 1s ease;
 }
 
 @keyframes shake {
@@ -191,7 +191,7 @@
   }
 }
 
-@keyframes hit-bounce {
+@keyframes played-bounce {
   0% {
     transform: scale(1) translateY(0);
   }

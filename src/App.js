@@ -5,6 +5,7 @@ import SelectInstrument from './Components/SelectInstrument';
 import { CONTRACT_ADDRESS, transformInstrumentData } from './constants';
 import myEpicGame from './utils/MyEpicGame.json';
 import { ethers } from 'ethers';
+import Arena from './Components/Arena';
 
 // Constants
 const TWITTER_HANDLE = 'danicuki';
@@ -26,7 +27,7 @@ const App = () => {
             className="cta-button connect-wallet-button"
             onClick={connectWalletAction}
           >
-            Connect Wallet To Get Started 1
+            Connect Wallet To Get Started
           </button>
         </div>
       );
@@ -34,8 +35,16 @@ const App = () => {
         * Scenario #2
         */
     } else if (currentAccount && !instrumentNFT) {
-      return <SelectInstrument setInstrumentoNFT={setInstrumentNFT} />;
+      return <SelectInstrument setInstrumentNFT={setInstrumentNFT} />;
     }
+    /*
+    * If there is a connected wallet and instrumentNFT, it's time to play!
+    */
+    else if (currentAccount && instrumentNFT) {
+      return <Arena instrumentNFT={instrumentNFT} setInstrumentNFT={setInstrumentNFT} />;
+    }
+  
+
   };
 
   const checkIfWalletIsConnected = async () => {
