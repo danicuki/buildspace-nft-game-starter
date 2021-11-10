@@ -1,4 +1,4 @@
-.select-character-container {
+.select-instrument-container {
   width: 100%;
   height: 100%;
   display: flex;
@@ -7,7 +7,7 @@
   color: white;
 }
 
-.select-character-container .character-grid {
+.select-instrument-container .instrument-grid {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -15,7 +15,7 @@
   grid-row-gap: 15px;
 }
 
-.character-grid .character-item {
+.instrument-grid .instrument-item {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -23,27 +23,27 @@
   align-self: center;
 }
 
-.character-item img {
+.instrument-item img {
   height: 300px;
   width: 350px;
   border-radius: 10px;
   object-fit: cover;
 }
 
-.character-item .name-container {
+.instrument-item .name-container {
   position: absolute;
   background-color: #838383;
   border-radius: 5px;
   margin: 10px;
 }
 
-.character-item .name-container p {
+.instrument-item .name-container p {
   margin: 0;
   padding: 5px 10px 5px 10px;
   font-weight: bold;
 }
 
-.character-item .character-mint-button {
+.instrument-item .instrument-mint-button {
   position: absolute;
   bottom: 0;
   width: 100%;
