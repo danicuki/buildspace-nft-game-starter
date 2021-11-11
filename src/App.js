@@ -6,6 +6,7 @@ import { CONTRACT_ADDRESS, transformInstrumentData } from './constants';
 import myEpicGame from './utils/MyEpicGame.json';
 import { ethers } from 'ethers';
 import Arena from './Components/Arena';
+import LoadingIndicator from './Components/LoadingIndicator';
 
 // Constants
 const TWITTER_HANDLE = 'danicuki';
@@ -14,8 +15,13 @@ const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState(null);
   const [instrumentNFT, setInstrumentNFT] = useState(null);
-  
+  const [isLoading, setIsLoading] = useState(false);
+
   const renderContent = () => {
+    if (isLoading) {
+      return <LoadingIndicator />;
+    }
+  
     if (!currentAccount) {
       return (
         <div className="connect-wallet-container">
@@ -53,6 +59,8 @@ const App = () => {
 
       if (!ethereum) {
         console.log('Make sure you have MetaMask!');
+        setIsLoading(false);
+
         return;
       } else {
         console.log('We have the ethereum object', ethereum);
@@ -76,6 +84,7 @@ const App = () => {
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   };
 
   const connectWalletAction = async () => {
@@ -105,6 +114,7 @@ const App = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     checkIfWalletIsConnected();
   }, []);
 
@@ -130,6 +140,9 @@ const App = () => {
       } else {
         console.log('No character NFT found');
       }
+
+      setIsLoading(false);
+
     };
   
     /*

@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import { CONTRACT_ADDRESS, transformInstrumentData } from '../../constants';
 import myEpicGame from '../../utils/MyEpicGame.json';
 import './Arena.css';
+import LoadingIndicator from '../LoadingIndicator';
 
 /*
  * We pass in our instrumentNFT metadata so we can a cool card in our UI
@@ -12,6 +13,7 @@ const Arena = ({ instrumentNFT, setInstrumentNFT }) => {
   const [gameContract, setGameContract] = useState(null);
   const [boss, setBoss] = useState(null);
   const [playState, setPlayState] = useState('');
+  const [showToast, setShowToast] = useState(false);
 
   // UseEffects
   useEffect(() => {
@@ -84,6 +86,11 @@ const Arena = ({ instrumentNFT, setInstrumentNFT }) => {
         await playTxn.wait();
         console.log('playTxn:', playTxn);
         setPlayState('played');
+
+        setShowToast(true);
+        setTimeout(() => {
+          setShowToast(false);
+        }, 5000);  
       }
     } catch (error) {
       console.error('Error playing to the boss:', error);
@@ -94,6 +101,13 @@ const Arena = ({ instrumentNFT, setInstrumentNFT }) => {
 
   return (
     <div className="arena-container">
+      {/* Add your toast HTML right here */}
+      {boss && instrumentNFT && (
+      <div id="toast" className={showToast ? 'show' : ''}>
+        <div id="desc">{`💥 ${boss.name} volume was reduced ${instrumentNFT.notes} levels!`}</div>
+      </div>
+      )}
+
       {/* Replace your Boss UI with this */}
       {boss && (
         <div className="boss-container">
@@ -112,6 +126,13 @@ const Arena = ({ instrumentNFT, setInstrumentNFT }) => {
               {`🎵 Play to ${boss.name}`}
             </button>
           </div>
+          {playState === 'playing' && (
+            <div className="loading-indicator">
+              <LoadingIndicator />
+              <p>Playing 🎵</p>
+            </div>
+          )}
+
         </div>
       )}
   

@@ -3,6 +3,7 @@ import './SelectInstrument.css';
 import { ethers } from 'ethers';
 import { CONTRACT_ADDRESS, transformInstrumentData } from '../../constants';
 import myEpicGame from '../../utils/MyEpicGame.json';
+import LoadingIndicator from '../LoadingIndicator';
 
 /*
  * Don't worry about setInstrumentNFT just yet, we will talk about it soon!
@@ -10,6 +11,7 @@ import myEpicGame from '../../utils/MyEpicGame.json';
 const SelectInstrument = ({ setInstrumentNFT }) => {
   const [instruments, setInstruments] = useState([]);
   const [gameContract, setGameContract] = useState(null);
+  const [mintingInstrument, setMintingInstrument] = useState(false);
 
   useEffect(() => {
     const getInstruments = async () => {
@@ -103,8 +105,10 @@ const SelectInstrument = ({ setInstrumentNFT }) => {
 
   // Actions
   const mintInstrumentNFTAction = (instrumentId) => async () => {
+    setMintingInstrument(true);
     try {
       if (gameContract) {
+
         console.log('Minting instrument in progress...');
         const mintTxn = await gameContract.mintInstrumentNFT(instrumentId);
         await mintTxn.wait();
@@ -113,6 +117,7 @@ const SelectInstrument = ({ setInstrumentNFT }) => {
     } catch (error) {
       console.warn('MintInstrumentAction Error:', error);
     }
+    setMintingInstrument(false);
   };
 
 
@@ -138,6 +143,20 @@ const SelectInstrument = ({ setInstrumentNFT }) => {
       {instruments.length > 0 && (
         <div className="instrument-grid">{renderInstruments()}</div>
       )}
+          {/* Only show our loading state if mintingCharacter is true */}
+    {mintingInstrument && (
+      <div className="loading">
+        <div className="indicator">
+          <LoadingIndicator />
+          <p>Minting In Progress...</p>
+        </div>
+        <img
+          src="https://media2.giphy.com/media/61tYloUgq1eOk/giphy.gif?cid=ecf05e47dg95zbpabxhmhaksvoy8h526f96k4em0ndvx078s&rid=giphy.gif&ct=g"
+          alt="Minting loading indicator"
+        />
+      </div>
+    )}
+
     </div>
   );
   
